@@ -98,3 +98,6 @@ foreach (var report in slowRequests)
 {
     Console.WriteLine($"{report.TimeTakenMs,10} {report.StatusCode,8} {report.Method,-8} {report.Url}");
 }
+
+var excelGenerator = new ExcelReportGenerator();
+excelGenerator.GenerateReport();
