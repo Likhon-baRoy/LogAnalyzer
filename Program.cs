@@ -72,3 +72,16 @@ foreach (var report in methodDistribution)
 {
     Console.WriteLine($"{report.Method,-10} {report.HitCount,8}");
 }
+
+var hourlyTrafficReport = reportService.GetHourlyTrafficReport(logs);
+
+Console.WriteLine();
+Console.WriteLine("Hourly Traffic Report");
+Console.WriteLine(new string('-', 40));
+Console.WriteLine($"{"Hour",-8} {"Hits",8}");
+Console.WriteLine(new string('-', 40));
+
+foreach (var report in hourlyTrafficReport)
+{
+    Console.WriteLine($"{report.Hour:D2}:00 {report.HitCount,8}");
+}

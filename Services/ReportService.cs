@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using LogAnalyzer.DTOs;
 using LogAnalyzer.Models;
 
@@ -96,5 +97,17 @@ public sealed class ReportService
                     HitCount = group.Count()
                 })
                 .OrderByDescending(report => report.HitCount);
+    }
+
+    public IEnumerable<HourlyTrafficReport> GetHourlyTrafficReport(IEnumerable<LogEntry> logs)
+    {
+        return logs
+                .GroupBy(log => log.Timestamp.Hour)
+                .Select(group => new HourlyTrafficReport
+                {
+                    Hour = group.Key,
+                    HitCount = group.Count()
+                })
+                .OrderBy(report => report.Hour);
     }
 }
