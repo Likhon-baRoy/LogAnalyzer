@@ -64,4 +64,25 @@ public sealed class ReportService
                 .OrderByDescending(report => report.HitCount)
                 .Take(count);
     }
+
+    public IEnumerable<ErrorApiReport> GetTopErrorApis(IEnumerable<LogEntry> logs, int count = 10)
+    {
+        return logs
+                .Where(log => log.StatusCode >= 400)
+                .GroupBy(log => new
+                {
+                    log.Url,
+                    log.Method,
+                    log.StatusCode
+                })
+                .Select(group => new ErrorApiReport
+                {
+                    Url = group.Key.Url,
+                    Method = group.Key.Method,
+                    StatusCode = group.Key.StatusCode,
+                    HitCount = group.Count()
+                })
+                .OrderByDescending(report => report.HitCount)
+                .Take(count);
+    }
 }

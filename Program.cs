@@ -46,3 +46,16 @@ foreach (var report in topRequestedApiReport)
 {
     Console.WriteLine($"{report.HitCount,-8} {report.Method,-8} {report.Url}");
 }
+
+var errorApiReport = reportService.GetTopErrorApis(logs);
+
+Console.WriteLine();
+Console.WriteLine("Top Error APIs");
+Console.WriteLine(new string('-', 100));
+Console.WriteLine($"{"Hits",8} {"Status",8} {"Method",-8} URL");
+Console.WriteLine(new string('-', 100));
+
+foreach (var report in errorApiReport)
+{
+    Console.WriteLine($"{report.HitCount,8} {report.StatusCode,8} {report.Method,-8} {report.Url}");
+}
