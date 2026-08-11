@@ -85,4 +85,16 @@ public sealed class ReportService
                 .OrderByDescending(report => report.HitCount)
                 .Take(count);
     }
+
+    public IEnumerable<MethodDistributionReport> GetMethodDistribution(IEnumerable<LogEntry> logs)
+    {
+        return logs
+                .GroupBy(log => log.Method)
+                .Select(group => new MethodDistributionReport
+                {
+                    Method = group.Key,
+                    HitCount = group.Count()
+                })
+                .OrderByDescending(report => report.HitCount);
+    }
 }

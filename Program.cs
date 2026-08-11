@@ -59,3 +59,16 @@ foreach (var report in errorApiReport)
 {
     Console.WriteLine($"{report.HitCount,8} {report.StatusCode,8} {report.Method,-8} {report.Url}");
 }
+
+var methodDistribution = reportService.GetMethodDistribution(logs);
+
+Console.WriteLine();
+Console.WriteLine("HTTP Method Distribution");
+Console.WriteLine(new string('-', 40));
+Console.WriteLine($"{"Method",-10} {"Hits",8}");
+Console.WriteLine(new string('-', 40));
+
+foreach (var report in methodDistribution)
+{
+    Console.WriteLine($"{report.Method,-10} {report.HitCount,8}");
+}
