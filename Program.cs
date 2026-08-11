@@ -5,6 +5,7 @@ var reportService = new ReportService();
 
 var logs = parser.ParseFile("sample.log");
 
+Console.WriteLine($"Average RTT: {reportService.GetAverageResponseTime(logs):F2} ms");
 Console.WriteLine($"Total Hits: {reportService.GetTotalHitCount(logs)}");
 Console.WriteLine($"Successful Requests: {reportService.GetSuccessRequestCount(logs)}");
 

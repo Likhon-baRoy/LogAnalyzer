@@ -28,4 +28,9 @@ public sealed class ReportService
                     Count = group.Count()
                 });
     }
+
+    public double GetAverageResponseTime(IEnumerable<LogEntry> logs)
+    {
+        return logs.Average(log => log.TimeTakenMs);
+    }
 }
