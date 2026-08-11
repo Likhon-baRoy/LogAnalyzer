@@ -85,3 +85,16 @@ foreach (var report in hourlyTrafficReport)
 {
     Console.WriteLine($"{report.Hour:D2}:00 {report.HitCount,8}");
 }
+
+var slowRequests = reportService.GetSlowRequests(logs);
+
+Console.WriteLine();
+Console.WriteLine("Slow Requests (>1000 ms)");
+Console.WriteLine(new string('-', 100));
+Console.WriteLine($"{"Time(ms)",10} {"Status",8} {"Method",-8} URL");
+Console.WriteLine(new string('-', 100));
+
+foreach (var report in slowRequests)
+{
+    Console.WriteLine($"{report.TimeTakenMs,10} {report.StatusCode,8} {report.Method,-8} {report.Url}");
+}

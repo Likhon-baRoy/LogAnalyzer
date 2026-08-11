@@ -110,4 +110,19 @@ public sealed class ReportService
                 })
                 .OrderBy(report => report.Hour);
     }
+
+    public IEnumerable<SlowApiReport> GetSlowRequests(IEnumerable<LogEntry> logs, int thresholdMs = 1000, int count = 10)
+    {
+        return logs
+                .Where(log => log.TimeTakenMs >= thresholdMs)
+                .Select(log => new SlowApiReport
+                {
+                    Url = log.Url,
+                    Method = log.Method,
+                    StatusCode = log.StatusCode,
+                    TimeTakenMs = log.TimeTakenMs
+                })
+                .OrderByDescending(report => report.TimeTakenMs)
+                .Take(count);
+    }
 }
