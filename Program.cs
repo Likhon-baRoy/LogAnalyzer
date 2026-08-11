@@ -17,5 +17,7 @@ Console.WriteLine(result?.TimeTakenMs);
 var logs = parser.ParseFile("sample.log");
 
 var totalHits = reportService.GetTotalHitCount(logs);
-
 Console.WriteLine($"Total Hits: {totalHits}");
+
+var totalSuccessHits = reportService.GetSuccessRequestCount(logs);
+Console.WriteLine($"Total Success Request Count: {totalSuccessHits}");

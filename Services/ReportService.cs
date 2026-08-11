@@ -8,4 +8,11 @@ public sealed class ReportService
     {
         return logs.Count();
     }
+
+    public int GetSuccessRequestCount(IEnumerable<LogEntry> logs)
+    {
+        return logs
+                .Where(log => log.StatusCode == 200)
+                .Count();
+    }
 }
