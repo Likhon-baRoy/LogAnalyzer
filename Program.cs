@@ -1,2 +1,11 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using LogAnalyzer.Services;
+
+var parser = new LogParser();
+
+var log = "2026-08-09 23:59:00 172.19.191.66 GET /SfaAppApi/api/v9/dashboard/GetTodayHighlights HTTP/1.1 443 - 43.245.120.45 - - 200 - - 598";
+
+var result = parser.ParseLine(log);
+
+Console.WriteLine(result?.Url);
+Console.WriteLine(result?.StatusCode);
+Console.WriteLine(result?.TimeTakenMs);
