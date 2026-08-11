@@ -18,7 +18,10 @@ public sealed class LogParser
         if (string.IsNullOrWhiteSpace(line))
             return null;
 
-        var parts = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        var parts = line.Split(
+            ' ',
+            StringSplitOptions.TrimEntries |
+            StringSplitOptions.RemoveEmptyEntries);
 
         if (parts.Length < MinimumColumnCount)
             return null;
@@ -47,6 +50,14 @@ public sealed class LogParser
 
     public IEnumerable<LogEntry> ParseFile(string filePath)
     {
-        throw new NotImplementedException();
+        foreach (var line in File.ReadLines(filePath))
+        {
+            var entry = ParseLine(line);
+
+            if (entry is not null)
+            {
+                yield return entry;
+            }
+        }
     }
 }
