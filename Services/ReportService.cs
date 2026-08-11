@@ -33,4 +33,18 @@ public sealed class ReportService
     {
         return logs.Average(log => log.TimeTakenMs);
     }
+
+    public IEnumerable<SlowApiReport> GetTopSlowApis(IEnumerable<LogEntry> logs, int count = 10)
+    {
+        return logs
+                .OrderByDescending(log => log.TimeTakenMs)
+                .Take(10)
+                .Select(log => new SlowApiReport
+                {
+                    Url = log.Url,
+                    Method = log.Method,
+                    StatusCode = log.StatusCode,
+                    TimeTakenMs = log.TimeTakenMs
+                });
+    }
 }
