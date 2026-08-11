@@ -33,3 +33,16 @@ foreach (var report in slowApiReport)
 {
     Console.WriteLine($"{report.Method,-8} {report.StatusCode,-8} {report.TimeTakenMs,-12} {report.Url}");
 }
+
+var topRequestedApiReport = reportService.GetTopRequestedApis(logs);
+
+Console.WriteLine();
+Console.WriteLine("Top 10 Requested APIs");
+Console.WriteLine(new string('-', 90));
+Console.WriteLine($"{"Hits",-8} {"Method",-8} URL");
+Console.WriteLine(new string('-', 90));
+
+foreach (var report in topRequestedApiReport)
+{
+    Console.WriteLine($"{report.HitCount,-8} {report.Method,-8} {report.Url}");
+}

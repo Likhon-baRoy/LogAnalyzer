@@ -17,8 +17,7 @@ public sealed class ReportService
                 .Count();
     }
 
-    public IEnumerable<StatusCodeReport> GetStatusCodeReport(
-    IEnumerable<LogEntry> logs)
+    public IEnumerable<StatusCodeReport> GetStatusCodeReport(IEnumerable<LogEntry> logs)
     {
         return logs
                 .GroupBy(log => log.StatusCode)
@@ -38,7 +37,7 @@ public sealed class ReportService
     {
         return logs
                 .OrderByDescending(log => log.TimeTakenMs)
-                .Take(10)
+                .Take(count)
                 .Select(log => new SlowApiReport
                 {
                     Url = log.Url,
@@ -46,5 +45,23 @@ public sealed class ReportService
                     StatusCode = log.StatusCode,
                     TimeTakenMs = log.TimeTakenMs
                 });
+    }
+
+    public IEnumerable<TopRequestedApiReport> GetTopRequestedApis(IEnumerable<LogEntry> logs, int count = 10)
+    {
+        return logs
+                .GroupBy(log => new
+                {
+                    log.Url,
+                    log.Method
+                })
+                .Select(group => new TopRequestedApiReport
+                {
+                    Url = group.Key.Url,
+                    Method = group.Key.Method,
+                    HitCount = group.Count()
+                })
+                .OrderByDescending(report => report.HitCount)
+                .Take(count);
     }
 }
